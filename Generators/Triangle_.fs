@@ -84,7 +84,7 @@ void main() {
     float l23 = thickLineSeg(aspect, v2, v3, thickness);
     float l31 = thickLineSeg(aspect, v3, v1, thickness);
     
-    vec3 color = vec3(min(l12 + l23 + l31, 1.0));
+    vec3 color = vec3(min(1.0, l12+l23+l31));
     
     gl_FragColor = vec4(color, 1.0);
 }
