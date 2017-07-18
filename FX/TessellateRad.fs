@@ -51,7 +51,7 @@ void main() {
     vec2 location = aspect.xy - center;
     float ang = atan(location.y, location.x);
     float rad = length(location);
-    ang = mod(ang, tessAngle) + angle_offset*TAU;
+    ang = mod(ang - angle_offset*TAU, tessAngle) + angle_offset*TAU;
     
     vec2 tessLocation = rad*vec2(cos(ang), sin(ang));
     tessLocation += center;
