@@ -50,7 +50,5 @@ void main() {
     vec2 v1 = vec2(x1, y1);
     vec2 v2 = vec2(x2, y2);
     
-    vec3 color = vec3(slice(aspect, v1, v2, clockwise));
-    
-    gl_FragColor = vec4(color, 1.0);
+    gl_FragColor = vec4(slice(aspect, v1, v2, clockwise));
 }

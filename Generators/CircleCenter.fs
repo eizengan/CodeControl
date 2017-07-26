@@ -1,6 +1,6 @@
 /*{
     "CREDIT": "VJ Codec",
-    "DESCRIPTION": "Filled circle generator for CodeControl",
+    "DESCRIPTION": "Circle generator for CodeControl",
     "CATEGORIES": [
         "generator",
         "CodeControl"
@@ -19,8 +19,13 @@
             "TYPE": "float",
             "MIN": 0.0,
             "DEFAULT": 0.0
+        },
+        {
+            "NAME": "thickness",
+            "TYPE": "float",
+            "MIN": 0.0,
+            "DEFAULT": 0.0
         }
-    
     ]
 }*/
 
@@ -35,9 +40,10 @@ vec4 getAspect() {
 void main() {
     vec4 aspect = getAspect();
     
-    vec2 center =  vec2(x, y);
+    vec2 center = vec2(x, y);
     
-    vec3 color = vec3(float(length(aspect.xy - vec2(x, y)) <= radius));
+    float outer = float(length(aspect.xy - center) <= radius + 0.5*thickness);
+    float inner = float(length(aspect.xy - center) >  radius - 0.5*thickness);
     
-    gl_FragColor = vec4(color, 1.0);
+    gl_FragColor = vec4(outer * inner);
 }

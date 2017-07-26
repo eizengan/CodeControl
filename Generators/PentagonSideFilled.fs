@@ -1,7 +1,7 @@
 /*{
     "ISFVSN": "2.0",
     "CREDIT": "VJ Conduit",
-    "DESCRIPTION": "Filled hexagon generator for CodeControl",
+    "DESCRIPTION": "Filled pentagon generator for CodeControl",
     "CATEGORIES": [
         "filter",
         "CodeControl"
@@ -24,14 +24,14 @@
             "TYPE": "float"
         },
         {
-            "NAME": "center_height",
+            "NAME": "base_width",
             "TYPE": "float",
             "MIN": 0.0,
             "MAX": 1.0,
             "DEFAULT": 0.5
         },
         {
-            "NAME": "base_width",
+            "NAME": "center_height",
             "TYPE": "float",
             "MIN": 0.0,
             "MAX": 1.0,
@@ -58,27 +58,20 @@ float slice(vec4 aspect, vec2 p1, vec2 p2, bool clockwise) {
 void main() {
     vec4 aspect = getAspect();
   
-    vec4 offsets;
-    offsets.xy = 0.5*vec2(width);
-    offsets.y *= base_width;
-    offsets.zw = vec2(height);
-    offsets.w *= center_height;
+    vec2 outer = vec2(0.5*width, height);
+    vec2 inner = outer * vec2(base_width, center_height);
   
-    vec2 v1 = vec2(base_x + offsets.y, base_y);
-    vec2 v2 = vec2(base_x + offsets.x, base_y + offsets.w);
-    vec2 v3 = vec2(base_x + offsets.y, base_y + offsets.z);
-    vec2 v4 = vec2(base_x - offsets.y, base_y + offsets.z);
-    vec2 v5 = vec2(base_x - offsets.x, base_y + offsets.w);
-    vec2 v6 = vec2(base_x - offsets.y, base_y);
+    vec2 v1 = vec2(base_x - inner.x, base_y);
+    vec2 v2 = vec2(base_x + inner.x, base_y);
+    vec2 v3 = vec2(base_x + outer.x, base_y + inner.y);
+    vec2 v4 = vec2(base_x, base_y + outer.y);
+    vec2 v5 = vec2(base_x - outer.x, base_y + inner.y);
   
     float s12 = slice(aspect, v1, v2, false);
     float s23 = slice(aspect, v2, v3, false);
     float s34 = slice(aspect, v3, v4, false);
     float s45 = slice(aspect, v4, v5, false);
-    float s56 = slice(aspect, v5, v6, false);
-    float s61 = slice(aspect, v6, v1, false);
+    float s51 = slice(aspect, v5, v1, false);
   
-    vec3 color = vec3(s12*s23*s34*s45*s56*s61);
-  
-    gl_FragColor = vec4(color, 1.0);
+    gl_FragColor = vec4(s12*s23*s34*s45*s51);
 }

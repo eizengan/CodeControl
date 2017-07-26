@@ -57,7 +57,5 @@ void main() {
                 slice(aspect, v2, v3, clockwise) *
                 slice(aspect, v3, v1, clockwise);
     
-    vec3 color = vec3(tri);
-    
-    gl_FragColor = vec4(color, 1.0);
+    gl_FragColor = vec4(tri);
 }
