@@ -50,7 +50,7 @@ void main() {
     vec4 aspect = getAspect();
     vec2 aspSizeInv = 1.0 / aspect.zw;
     float incr = TAU / float(type);
-    vec4 pixel = show_original ? IMG_THIS_PIXEL(inputImage) : vec4(0.0);
+    vec4 pixel = float(show_original)*IMG_THIS_PIXEL(inputImage);
     for (int iii = 0; iii < 6; ++iii) {
         if (iii > type) break;
         float ang = float(iii)*incr + angle_offset*TAU;
