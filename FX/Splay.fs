@@ -33,13 +33,6 @@
             "TYPE": "float",
             "MIN": 0.0,
             "DEFAULT": 0.0
-        },
-        {
-            "NAME": "mix_mode",
-            "TYPE": "long",
-            "VALUES": [0, 1],
-            "LABELS": ["Add", "Mult"],
-            "DEFAULT": 0
         }
     ]
 }*/
@@ -57,15 +50,19 @@ void main() {
     vec4 aspect = getAspect();
     vec2 aspSizeInv = 1.0 / aspect.zw;
     float incr = TAU / float(type);
-    vec3 color = show_original ? IMG_THIS_PIXEL(inputImage).rgb : vec3(float(mix_mode));
+    vec4 pixel = show_original ? IMG_THIS_PIXEL(inputImage) : vec4(0.0);
     for (int iii = 0; iii < 6; ++iii) {
         if (iii > type) break;
         float ang = float(iii)*incr + angle_offset*TAU;
         vec2 st = amount*vec2(cos(ang), sin(ang));
         st = aspSizeInv*(aspect.st + st);
-        vec3 image = IMG_NORM_PIXEL(inputImage, st).rgb;
-        color = float(mix_mode)*color*image +
-                (1.0 - float(mix_mode))*min(color + image, 1.0);
+        vec4 image = IMG_NORM_PIXEL(inputImage, st);
+		float a = image.a + pixel.a*(1.0 - image.a);
+		if (a == 0.0)
+		    pixel.rgb = vec3(0.0);
+		else
+		    pixel.rgb = (image.rgb*image.a + pixel.rgb*pixel.a*(1.0 - image.a))/a;
+		pixel.a = a;
     }
-    gl_FragColor = vec4(color, 1.0);
+    gl_FragColor = pixel;
 }

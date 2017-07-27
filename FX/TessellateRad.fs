@@ -28,6 +28,11 @@
             "NAME": "divisor",
             "TYPE": "float",
             "MIN": 1.0
+        },
+        {
+            "NAME": "mirror",
+            "TYPE": "bool",
+            "DEFAULT": false
         }
     ]
 }*/
@@ -46,12 +51,16 @@ void main() {
     vec4 aspect = getAspect();
     
     vec2 center = vec2(center_x, center_y);
-    float tessAngle = TAU/floor(divisor);
+    center*=aspect.zw;
+    float tessAngle = TAU/(floor(divisor)*(1.0 + float(mirror)));
     
     vec2 location = aspect.xy - center;
     float ang = atan(location.y, location.x);
     float rad = length(location);
-    ang = mod(ang - angle_offset*TAU, tessAngle) + angle_offset*TAU;
+
+    float normalAng = mod(ang - angle_offset*TAU, tessAngle) + angle_offset*TAU;
+    float mirrorAng = abs(mod(ang - angle_offset*TAU + tessAngle, 2.0*tessAngle) - tessAngle) + angle_offset*TAU;
+    ang = float(mirror)*mirrorAng + (1.0-float(mirror))*normalAng;
     
     vec2 tessLocation = rad*vec2(cos(ang), sin(ang));
     tessLocation += center;
