@@ -20,9 +20,7 @@
         },
         {
             "NAME": "angle_offset",
-            "TYPE": "float",
-            "MIN": 0.0,
-            "MAX": 1.0
+            "TYPE": "float"
         },
         {
             "NAME": "divisor",
@@ -51,7 +49,6 @@ void main() {
     vec4 aspect = getAspect();
     
     vec2 center = vec2(center_x, center_y);
-    center*=aspect.zw;
     float tessAngle = TAU/(floor(divisor)*(1.0 + float(mirror)));
     
     vec2 location = aspect.xy - center;
