@@ -57,12 +57,12 @@ void main() {
         vec2 st = amount*vec2(cos(ang), sin(ang));
         st = aspSizeInv*(aspect.st + st);
         vec4 image = IMG_NORM_PIXEL(inputImage, st);
-		float a = image.a + pixel.a*(1.0 - image.a);
-		if (a == 0.0)
-		    pixel.rgb = vec3(0.0);
-		else
-		    pixel.rgb = (image.rgb*image.a + pixel.rgb*pixel.a*(1.0 - image.a))/a;
-		pixel.a = a;
+        float a = image.a + pixel.a*(1.0 - image.a);
+        if (a == 0.0)
+            pixel.rgb = vec3(0.0);
+        else
+            pixel.rgb = (image.rgb*image.a + pixel.rgb*pixel.a*(1.0 - image.a))/a;
+        pixel.a = a;
     }
     gl_FragColor = pixel;
 }
