@@ -12,11 +12,13 @@
         },
         {
             "NAME": "offset_x",
-            "TYPE": "float"
+            "TYPE": "float",
+            "IDENTITY": 0.0
         },
         {
             "NAME": "offset_y",
-            "TYPE": "float"
+            "TYPE": "float",
+            "IDENTITY": 0.0
         },
         {
             "NAME": "width",

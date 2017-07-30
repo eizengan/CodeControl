@@ -17,7 +17,8 @@
         },
         {
             "NAME": "base_width",
-            "TYPE": "float"
+            "TYPE": "float",
+            "MIN": 0.0
         },
         {
             "NAME": "vertex_x",
@@ -30,14 +31,12 @@
         {
             "NAME": "thickness",
             "TYPE": "float",
-            "MIN": 0.0,
-            "DEFAULT": 0.0
+            "MIN": 0.0
         },
         {
             "NAME": "intensity",
             "TYPE": "float",
-            "MIN": 0.0,
-            "DEFAULT": 0.0
+            "MIN": 0.0
         }
     ]
 }*/

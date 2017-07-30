@@ -9,8 +9,7 @@
     "INPUTS": [
         {
             "NAME": "x1",
-            "TYPE": "float",
-            "MAX": 2.0
+            "TYPE": "float"
         },
         {
             "NAME": "y1",
@@ -18,26 +17,25 @@
         },
         {
             "NAME": "x2",
-            "TYPE": "float",
-            "MAX": 2.0
+            "TYPE": "float"
         },
         {
             "NAME": "y2",
             "TYPE": "float"
         },
         {
-            "NAME": "clockwise",
-            "TYPE": "bool"
-        },
-        {
             "NAME": "thickness",
             "TYPE": "float",
-            "MIN": 0.0,
-            "DEFAULT":0.0
+            "MIN": 0.0
         },
         {
             "NAME": "intensity",
-            "TYPE": "float"
+            "TYPE": "float",
+            "MIN": 0.0
+        },
+        {
+            "NAME": "clockwise",
+            "TYPE": "bool"
         }
     ]
 }*/

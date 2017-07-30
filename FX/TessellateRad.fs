@@ -20,12 +20,14 @@
         },
         {
             "NAME": "angle_offset",
-            "TYPE": "float"
+            "TYPE": "float",
+            "IDENTITY": 0.0
         },
         {
             "NAME": "divisor",
             "TYPE": "float",
-            "MIN": 1.0
+            "MIN": 1.0,
+            "IDENTITY": 1.0
         },
         {
             "NAME": "mirror",

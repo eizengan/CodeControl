@@ -10,8 +10,7 @@
     "INPUTS": [
         {
             "NAME": "x1",
-            "TYPE": "float",
-            "MAX": 2.0
+            "TYPE": "float"
         },
         {
             "NAME": "y1",
@@ -19,8 +18,7 @@
         },
         {
             "NAME": "x2",
-            "TYPE": "float",
-            "MAX": 2.0
+            "TYPE": "float"
         },
         {
             "NAME": "y2",
@@ -29,8 +27,7 @@
         {
             "NAME": "thickness",
             "TYPE": "float",
-            "MIN": 0.0,
-            "DEFAULT":0.0
+            "MIN": 0.0
         }
     ]
 }*/

@@ -17,7 +17,8 @@
         },
         {
             "NAME": "base_width",
-            "TYPE": "float"
+            "TYPE": "float",
+            "MIN": 0.0
         },
         {
             "NAME": "vertex_x",

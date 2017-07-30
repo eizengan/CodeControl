@@ -17,8 +17,7 @@
         {
             "NAME": "radius",
             "TYPE": "float",
-            "MIN": 0.0,
-            "DEFAULT": 0.0
+            "MIN": 0.0
         }
     
     ]

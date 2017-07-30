@@ -13,13 +13,11 @@
         {
             "NAME": "offset_x",
             "TYPE": "float",
-            "DEFAULT": 0.0,
             "IDENTITY": 0.0
         },
         {
             "NAME": "offset_y",
             "TYPE": "float",
-            "DEFAULT": 0.0,
             "IDENTITY": 0.0
         },
         {

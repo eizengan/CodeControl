@@ -13,7 +13,8 @@
         {
             "NAME": "show_original",
             "TYPE": "bool",
-            "DEFAULT": true
+            "DEFAULT": true,
+            "IDENTITY": true
         },
         {
             "NAME": "type",
@@ -26,13 +27,12 @@
             "NAME": "amount",
             "TYPE": "float",
             "MIN": 0.0,
-            "DEFAULT": 0.0
+            "IDENTITY": 0.0
         },
         {
             "NAME": "angle_offset",
             "TYPE": "float",
-            "MIN": 0.0,
-            "DEFAULT": 0.0
+            "IDENTITY": 0.0
         }
     ]
 }*/

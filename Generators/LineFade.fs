@@ -9,8 +9,7 @@
     "INPUTS": [
         {
             "NAME": "x1",
-            "TYPE": "float",
-            "MAX": 2.0
+            "TYPE": "float"
         },
         {
             "NAME": "y1",
@@ -18,8 +17,7 @@
         },
         {
             "NAME": "x2",
-            "TYPE": "float",
-            "MAX": 2.0
+            "TYPE": "float"
         },
         {
             "NAME": "y2",
@@ -34,6 +32,10 @@
             "NAME": "intensity",
             "TYPE": "float",
             "MIN": 0.0
+        },
+        {
+            "NAME": "clockwise",
+            "TYPE": "bool"
         }
     ]
 }*/
@@ -67,5 +69,5 @@ vec4 fadeLine(vec4 aspect, vec2 p1, vec2 p2, float thickness, float intensity, b
 }
 
 void main() {
-    gl_FragColor = fadeLine(getAspect(), vec2(x1, y1), vec2(x2, y2), thickness, intensity, true);
+    gl_FragColor = fadeLine(getAspect(), vec2(x1, y1), vec2(x2, y2), thickness, intensity, clockwise);
 }
