@@ -71,18 +71,22 @@ float thickLineSeg(vec4 aspect, vec2 p1, vec2 p2, float thickness) {
 
 void main() {
     vec4 aspect = getAspect();
-    
-    vec2 position = vec2(x, y);
-    
-    vec2 v1 = vec2(x - 0.5*width, y - 0.5*height);
-    vec2 v2 = vec2(x - 0.5*width, y + 0.5*height);
-    vec2 v3 = vec2(x + 0.5*width, y + 0.5*height);
-    vec2 v4 = vec2(x + 0.5*width, y - 0.5*height);
-    
+
+    vec4 offsets;
+    offsets.xy = 0.5 * vec2(-width, width);    //x offsets
+    offsets.zw = 0.5 * vec2(-height, height);  //y offsets
+
+    vec2 v1 = vec2(x + offsets.x, y + offsets.z);
+    vec2 v2 = vec2(x + offsets.x, y + offsets.w);
+    vec2 v3 = vec2(x + offsets.y, y + offsets.w);
+    vec2 v4 = vec2(x + offsets.y, y + offsets.z);
+
     float l12 = thickLineSeg(aspect, v1, v2, thickness);
     float l23 = thickLineSeg(aspect, v2, v3, thickness);
     float l34 = thickLineSeg(aspect, v3, v4, thickness);
     float l41 = thickLineSeg(aspect, v4, v1, thickness);
-    
-    gl_FragColor = vec4(min(1.0, l12+l23+l34+l41));
+
+    vec4 color = vec4(min(1.0, l12+l23+l34+l41));
+
+    gl_FragColor = color;
 }

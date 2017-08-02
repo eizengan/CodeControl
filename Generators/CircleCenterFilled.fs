@@ -34,7 +34,10 @@ vec4 getAspect() {
 void main() {
     vec4 aspect = getAspect();
     
-    vec2 center =  vec2(x, y);
+    vec2 center = vec2(x, y);
+    float pixelDistance = distance(aspect.xy, center);
     
-    gl_FragColor = vec4(float(length(aspect.xy - vec2(x, y)) <= radius));
+    vec4 color = vec4(float(pixelDistance <= radius));
+
+    gl_FragColor = color;
 }

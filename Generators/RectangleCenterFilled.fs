@@ -34,15 +34,32 @@ vec4 getAspect() {
     aspect.xy = aspect.zw * isf_FragNormCoord.xy;
     return aspect;
 }
+float slice(vec4 aspect, vec2 p1, vec2 p2, bool clockwise) {
+    vec2 points = p2 - p1;
+    vec2 pix = aspect.yx - p1.yx;
+    pix.x = -pix.x;
+    float inverter = 2.0*float(clockwise) - 1.0;
+    return float(p1 != p2)*step(0.0, inverter*dot(points, pix));
+}
 
 void main() {
     vec4 aspect = getAspect();
-    
-    vec2 position = vec2(x, y);
-    vec2 size = vec2(width, height);
-    
-    vec4 edges = vec4(      step(position - 0.5*size, aspect.xy),
-                      1.0 - step(position + 0.5*size, aspect.xy));
-                      
-    gl_FragColor = vec4(edges.x*edges.y*edges.z*edges.w);
+
+    vec4 offsets;
+    offsets.xy = 0.5 * vec2(-width, width);    //x offsets
+    offsets.zw = 0.5 * vec2(-height, height);  //y offsets
+
+    vec2 v1 = vec2(x + offsets.x, y + offsets.z);
+    vec2 v2 = vec2(x + offsets.x, y + offsets.w);
+    vec2 v3 = vec2(x + offsets.y, y + offsets.w);
+    vec2 v4 = vec2(x + offsets.y, y + offsets.z);
+
+    float s12 = slice(aspect, v1, v2, true);
+    float s23 = slice(aspect, v2, v3, true);
+    float s34 = slice(aspect, v3, v4, true);
+    float s41 = slice(aspect, v4, v1, true);
+
+    vec4 color = vec4(s12*s23*s34*s41);
+
+    gl_FragColor = color;
 }

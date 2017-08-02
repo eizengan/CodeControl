@@ -48,15 +48,17 @@ float slice(vec4 aspect, vec2 p1, vec2 p2, bool clockwise) {
 
 void main() {
     vec4 aspect = getAspect();
-    
+
     vec2 v1 = vec2(base_x - 0.5*base_width, base_y);
     vec2 v2 = vec2(base_x + 0.5*base_width, base_y);
     vec2 v3 = vec2(vertex_x, vertex_y);
-    
+
     bool clockwise = base_y > vertex_y;
-    float tri = slice(aspect, v1, v2, clockwise) *
-                slice(aspect, v2, v3, clockwise) *
-                slice(aspect, v3, v1, clockwise);
-    
-    gl_FragColor = vec4(tri);
+    float s12 = slice(aspect, v1, v2, clockwise);
+    float s23 = slice(aspect, v2, v3, clockwise);
+    float s31 = slice(aspect, v3, v1, clockwise);
+
+    vec4 color = vec4(s12*s23*s31);
+
+    gl_FragColor = color;
 }

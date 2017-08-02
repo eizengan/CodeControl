@@ -61,9 +61,11 @@ float thickLine(vec4 aspect, vec2 p1, vec2 p2, float thickness) {
 
 void main() {
     vec4 aspect = getAspect();
-    
+
     vec2 v1 = vec2(x1, y1);
     vec2 v2 = vec2(x2, y2);
-    
-    gl_FragColor = vec4(thickLine(aspect, v1, v2, thickness));
+
+    vec4 color = vec4(thickLine(aspect, v1, v2, thickness))
+
+    gl_FragColor = color;
 }

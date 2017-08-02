@@ -49,14 +49,14 @@ void main() {
     vec4 aspect = getAspect();
     
     vec2 center = vec2(x, y);
-    
-    float len = length(aspect.xy - center);
-    vec4 color;
-    bool innerCut = len > radius;
-    float fadeDist = (len - radius)/thickness;
+    vec2 edges = radius + thickness * vec2(0.0, 1.0);
+    float pixelDistance = distance(aspect.xy, center);
+    float fadeDist = (pixelDistance - radius)/thickness;
     fadeDist = float(fade_out)*fadeDist + (1.0 - float(fade_out))*(1.0 - fadeDist);
-    color.rgb = vec3(float(innerCut && len < radius + thickness));
-    color.a = float(innerCut)*(1.0 - pow(fadeDist, intensity));
+    
+    vec4 color;
+    color.rgb = vec3(float(edges.s < pixelDistance && pixelDistance <= edges.t));
+    color.a = color.r*(1.0 - pow(fadeDist, intensity));
     
     gl_FragColor = color;
 }

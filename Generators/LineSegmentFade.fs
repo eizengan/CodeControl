@@ -97,9 +97,11 @@ vec4 fadeLineSegment(vec4 aspect, vec2 p1, vec2 p2, float thickness, float inten
 
 void main() {
     vec4 aspect = getAspect();
-    vec2 p1 = vec2(x1, y1);
-    vec2 p2 = vec2(x2, y2);
-    
-    
-    gl_FragColor = fadeLineSegment(aspect, p1, p2, thickness, intensity, fade_out, clockwise);
+
+    vec2 v1 = vec2(x1, y1);
+    vec2 v2 = vec2(x2, y2);
+
+    vec4 color = fadeLineSegment(aspect, v1, v2, thickness, intensity, fade_out, clockwise);
+
+    gl_FragColor = color;
 }

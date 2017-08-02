@@ -110,11 +110,11 @@ vec4 fadeLineSegment(vec4 aspect, vec2 p1, vec2 p2, float thickness, float inten
 
 void main() {
     vec4 aspect = getAspect();
-   
+
     vec4 offsets;
-    offsets.xy = 0.5*vec2(width);
+    offsets.xy = 0.5*vec2(width);  //x distances
     offsets.y *= base_width;
-    offsets.zw = vec2(height);
+    offsets.zw = vec2(height);     //y distances
     offsets.w *= center_height;
    
     vec2 v1 = vec2(base_x + offsets.y, base_y);
@@ -122,7 +122,7 @@ void main() {
     vec2 v3 = vec2(base_x + offsets.y, base_y + offsets.z);
     vec2 v4 = vec2(base_x - offsets.y, base_y + offsets.z);
     vec2 v5 = vec2(base_x - offsets.x, base_y + offsets.w);
-vec2 v6 = vec2(base_x - offsets.y, base_y);
+    vec2 v6 = vec2(base_x - offsets.y, base_y);
     
     vec4 l12 = fadeLineSegment(aspect, v1, v2, thickness, intensity, fade_out, true);
     vec4 l23 = fadeLineSegment(aspect, v2, v3, thickness, intensity, fade_out, true);
@@ -134,6 +134,6 @@ vec2 v6 = vec2(base_x - offsets.y, base_y);
     vec4 color;
     color.rgb = min(l12.rgb+l23.rgb+l34.rgb+l45.rgb+l56.rgb+l61.rgb, 1.0);
     color.a = max(l12.a, max(l23.a, max(l34.a, max(l45.a, max(l56.a, l61.a)))));
-    
+
     gl_FragColor = color;
 }

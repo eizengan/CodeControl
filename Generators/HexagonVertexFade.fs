@@ -111,16 +111,18 @@ vec4 fadeLineSegment(vec4 aspect, vec2 p1, vec2 p2, float thickness, float inten
 void main() {
     vec4 aspect = getAspect();
     
-    vec2 x_offset = base_x + 0.5 * vec2(-width, width);
-    float center = center_height * height;
-    vec2 inner = base_y + center + center_width * vec2(-center, height - center);
+    float y_center = center_height * height;
+    vec4 offsets;
+    offsets.xy = width * vec2(-0.5, 0.5);             //x offsets
+    offsets.zw = vec2(-y_center, height - y_center);  //y offsets
+    offsets.zw = y_center + center_width * offsets.zw;
     
-    vec2 v1 = vec2(base_x,     base_y);
-    vec2 v2 = vec2(x_offset.y, inner.x);
-    vec2 v3 = vec2(x_offset.y, inner.y);
-    vec2 v4 = vec2(base_x,     base_y + height);
-    vec2 v5 = vec2(x_offset.x, inner.y);
-    vec2 v6 = vec2(x_offset.x, inner.x);
+    vec2 v1 = vec2(base_x,             base_y);
+    vec2 v2 = vec2(base_x + offsets.y, base_y + offsets.z);
+    vec2 v3 = vec2(base_x + offsets.y, base_y +  offsets.w);
+    vec2 v4 = vec2(base_x,             base_y + height);
+    vec2 v5 = vec2(base_x + offsets.x, base_y + offsets.w);
+    vec2 v6 = vec2(base_x + offsets.x, base_y + offsets.z);
     
     vec4 l12 = fadeLineSegment(aspect, v1, v2, thickness, intensity, fade_out, true);
     vec4 l23 = fadeLineSegment(aspect, v2, v3, thickness, intensity, fade_out, true);
@@ -132,6 +134,6 @@ void main() {
     vec4 color;
     color.rgb = min(l12.rgb+l23.rgb+l34.rgb+l45.rgb+l56.rgb+l61.rgb, 1.0);
     color.a = max(l12.a, max(l23.a, max(l34.a, max(l45.a, max(l56.a, l61.a)))));
-    
+
     gl_FragColor = color;
 }

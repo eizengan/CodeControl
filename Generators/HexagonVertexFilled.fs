@@ -60,16 +60,18 @@ float slice(vec4 aspect, vec2 p1, vec2 p2, bool clockwise) {
 void main() {
     vec4 aspect = getAspect();
     
-    vec2 x_offset = base_x + 0.5 * vec2(-width, width);
-    float center = center_height * height;
-    vec2 inner = base_y + center + center_width * vec2(-center, height - center);
+    float y_center = center_height * height;
+    vec4 offsets;
+    offsets.xy = width * vec2(-0.5, 0.5);             //x offsets
+    offsets.zw = vec2(-y_center, height - y_center);  //y offsets
+    offsets.zw = y_center + center_width * offsets.zw;
     
-    vec2 v1 = vec2(base_x,     base_y);
-    vec2 v2 = vec2(x_offset.y, inner.x);
-    vec2 v3 = vec2(x_offset.y, inner.y);
-    vec2 v4 = vec2(base_x,     base_y + height);
-    vec2 v5 = vec2(x_offset.x, inner.y);
-    vec2 v6 = vec2(x_offset.x, inner.x);
+    vec2 v1 = vec2(base_x,             base_y);
+    vec2 v2 = vec2(base_x + offsets.y, base_y + offsets.z);
+    vec2 v3 = vec2(base_x + offsets.y, base_y +  offsets.w);
+    vec2 v4 = vec2(base_x,             base_y + height);
+    vec2 v5 = vec2(base_x + offsets.x, base_y + offsets.w);
+    vec2 v6 = vec2(base_x + offsets.x, base_y + offsets.z);
     
     float s12 = slice(aspect, v1, v2, false);
     float s23 = slice(aspect, v2, v3, false);
@@ -78,5 +80,7 @@ void main() {
     float s56 = slice(aspect, v5, v6, false);
     float s61 = slice(aspect, v6, v1, false);
     
-    gl_FragColor = vec4(s12*s23*s34*s45*s56*s61);
+    vec4 color = vec4(s12*s23*s34*s45*s56*s61);
+
+    gl_FragColor = color;
 }
