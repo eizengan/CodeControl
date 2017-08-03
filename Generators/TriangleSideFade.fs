@@ -90,7 +90,7 @@ vec4 fadeLineSegment(vec4 aspect, vec2 p1, vec2 p2, float thickness, float inten
     vec4 ep1 = fadeEndpoint(aspect, p1, p2, thickness, fadeOut, intensity);
     vec4 ep2 = fadeEndpoint(aspect, p2, p1, thickness, fadeOut, intensity);
     vec4 l = fadeLine(aspect, p1, p2, thickness, intensity, fadeOut, clockwise);
-    
+
     vec4 color;
     color.rgb = ep1.rgb*ep2.rgb*l.rgb;
     color.a = min(ep1.a, min(ep2.a, l.a));

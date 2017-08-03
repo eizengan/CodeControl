@@ -62,13 +62,13 @@ float endpoint(vec4 aspect, vec2 p1, vec2 p2, float thickness) {
 float thickLineSeg(vec4 aspect, vec2 p1, vec2 p2, float thickness) {
     vec4 tp12 = thickLinePoints(p1, p2, thickness);
     vec4 tp21 = thickLinePoints(p2, p1, thickness);
-    
+
     float ep12 = endpoint(aspect, p1, p2, thickness);
     float degenerate = float(p1 == p2)*ep12;
-    
-    float seg = degenerate + 
+
+    float seg = degenerate +
                 slice(aspect, tp12.xy, tp12.zw, true) *
-                slice(aspect, tp21.xy, tp21.zw, true) * 
+                slice(aspect, tp21.xy, tp21.zw, true) *
                 ep12 * endpoint(aspect, p2, p1, thickness);
     return clamp(seg, 0.0, 1.0);
 }

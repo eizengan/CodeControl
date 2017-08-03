@@ -49,10 +49,10 @@ vec4 getAspect() {
 
 void main() {
     vec4 aspect = getAspect();
-    
+
     vec2 center = vec2(center_x, center_y);
     float tessAngle = TAU/(floor(divisor)*(1.0 + float(mirror)));
-    
+
     vec2 location = aspect.xy - center;
     float ang = atan(location.y, location.x);
     float rad = length(location);
@@ -60,9 +60,9 @@ void main() {
     float normalAng = mod(ang - angle_offset*TAU, tessAngle) + angle_offset*TAU;
     float mirrorAng = abs(mod(ang - angle_offset*TAU + tessAngle, 2.0*tessAngle) - tessAngle) + angle_offset*TAU;
     ang = float(mirror)*mirrorAng + (1.0-float(mirror))*normalAng;
-    
+
     vec2 tessLocation = rad*vec2(cos(ang), sin(ang));
     tessLocation += center;
-    
+
     gl_FragColor = IMG_NORM_PIXEL(inputImage, tessLocation/aspect.zw);
 }

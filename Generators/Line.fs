@@ -54,7 +54,7 @@ vec4 thickLinePoints(vec2 p1, vec2 p2, float thickness) {
 float thickLine(vec4 aspect, vec2 p1, vec2 p2, float thickness) {
     vec4 tp12 = thickLinePoints(p1, p2, thickness);
     vec4 tp21 = thickLinePoints(p2, p1, thickness);
-    
+
     return slice(aspect, tp12.xy, tp12.zw, true) *
            slice(aspect, tp21.xy, tp21.zw, true);
 }

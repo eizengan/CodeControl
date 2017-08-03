@@ -54,15 +54,15 @@ void main() {
     vec4 aspect = getAspect();
     vec2 offset = vec2(offset_x, offset_y);
     vec2 size = vec2(width, height);
-    
+
     vec2 normalLoc = mod(aspect.xy - offset, size);
     vec2 mirrorLoc = abs(mod(aspect.xy - offset + size, 2.0 * size) - size);
     vec2 location = float(mirror)*mirrorLoc + (1.0 - float(mirror))*normalLoc;
-    
+
     vec4 both = IMG_NORM_PIXEL(inputImage, (location + offset)/aspect.zw);
     vec4 horizontal = step(offset.y, aspect.y)*(1.0 - step(offset.y + height, aspect.y))*both;
     vec4 vertical =   step(offset.x, aspect.x)*(1.0 - step(offset.x +  width, aspect.x))*both;
-    
+
     gl_FragColor = float(direction == 0) * both +
                  float(direction == 1) * horizontal +
                  float(direction == 2) * vertical;
