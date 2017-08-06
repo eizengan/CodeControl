@@ -16,17 +16,20 @@
             "TYPE": "float"
         },
         {
-            "NAME": "base_width",
+            "NAME": "width",
+            "TYPE": "float",
+            "MIN": 0.0
+        },
+        {
+            "NAME": "height",
             "TYPE": "float",
             "MIN": 0.0
         },
         {
             "NAME": "vertex_x",
-            "TYPE": "float"
-        },
-        {
-            "NAME": "vertex_y",
-            "TYPE": "float"
+            "TYPE": "float",
+            "MIN": 0.0,
+            "MAX": 0.0
         }
     ]
 }*/
@@ -49,14 +52,13 @@ float slice(vec4 aspect, vec2 p1, vec2 p2, bool clockwise) {
 void main() {
     vec4 aspect = getAspect();
 
-    vec2 v1 = vec2(base_x - 0.5*base_width, base_y);
-    vec2 v2 = vec2(base_x + 0.5*base_width, base_y);
-    vec2 v3 = vec2(vertex_x, vertex_y);
+    vec2 v1 = vec2(base_x - 0.5*width, base_y);
+    vec2 v2 = vec2(base_x + 0.5*width, base_y);
+    vec2 v3 = vec2(base_x + (vertex_x - 0.5)*width, base_y + height);
 
-    bool clockwise = base_y > vertex_y;
-    float s12 = slice(aspect, v1, v2, clockwise);
-    float s23 = slice(aspect, v2, v3, clockwise);
-    float s31 = slice(aspect, v3, v1, clockwise);
+    float s12 = slice(aspect, v1, v2, false);
+    float s23 = slice(aspect, v2, v3, false);
+    float s31 = slice(aspect, v3, v1, false);
 
     vec4 color = vec4(s12*s23*s31);
 

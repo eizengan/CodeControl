@@ -8,25 +8,28 @@
     ],
     "INPUTS": [
         {
-            "NAME": "base_x",
+            "NAME": "x",
             "TYPE": "float"
         },
         {
-            "NAME": "base_y",
+            "NAME": "y",
             "TYPE": "float"
         },
         {
-            "NAME": "base_width",
+            "NAME": "width",
+            "TYPE": "float",
+            "MIN": 0.0
+        },
+        {
+            "NAME": "height",
             "TYPE": "float",
             "MIN": 0.0
         },
         {
             "NAME": "vertex_x",
-            "TYPE": "float"
-        },
-        {
-            "NAME": "vertex_y",
-            "TYPE": "float"
+            "TYPE": "float",
+            "MIN": 0.0,
+            "MAX": 0.0
         },
         {
             "NAME": "thickness",
@@ -76,9 +79,9 @@ float thickLineSeg(vec4 aspect, vec2 p1, vec2 p2, float thickness) {
 void main() {
     vec4 aspect = getAspect();
 
-    vec2 v1 = vec2(base_x - 0.5*base_width, base_y);
-    vec2 v2 = vec2(base_x + 0.5*base_width, base_y);
-    vec2 v3 = vec2(vertex_x, vertex_y);
+    vec2 v1 = vec2(x - 0.5*width, y - 0.5*height);
+    vec2 v2 = vec2(x + 0.5*width, y - 0.5*height);
+    vec2 v3 = vec2(x + (vertex_x - 0.5)*width, y + 0.5*height);
 
     float l12 = thickLineSeg(aspect, v1, v2, thickness);
     float l23 = thickLineSeg(aspect, v2, v3, thickness);

@@ -8,25 +8,28 @@
     ],
     "INPUTS": [
         {
-            "NAME": "base_x",
+            "NAME": "x",
             "TYPE": "float"
         },
         {
-            "NAME": "base_y",
+            "NAME": "y",
             "TYPE": "float"
         },
         {
-            "NAME": "base_width",
+            "NAME": "width",
+            "TYPE": "float",
+            "MIN": 0.0
+        },
+        {
+            "NAME": "height",
             "TYPE": "float",
             "MIN": 0.0
         },
         {
             "NAME": "vertex_x",
-            "TYPE": "float"
-        },
-        {
-            "NAME": "vertex_y",
-            "TYPE": "float"
+            "TYPE": "float",
+            "MIN": 0.0,
+            "MAX": 0.0
         },
         {
             "NAME": "thickness",
@@ -104,14 +107,13 @@ vec4 fadeLineSegment(vec4 aspect, vec2 p1, vec2 p2, float thickness, float inten
 void main() {
     vec4 aspect = getAspect();
 
-    vec2 v1 = vec2(base_x - 0.5*base_width, base_y);
-    vec2 v2 = vec2(base_x + 0.5*base_width, base_y);
-    vec2 v3 = vec2(vertex_x, vertex_y);
+    vec2 v1 = vec2(x - 0.5*width, y - 0.5*height);
+    vec2 v2 = vec2(x + 0.5*width, y - 0.5*height);
+    vec2 v3 = vec2(x + (vertex_x - 0.5)*width, y + 0.5*height);
 
-    bool clockwise = vertex_y > base_y;
-    vec4 l12 = fadeLineSegment(aspect, v1, v2, thickness, intensity, fade_out, clockwise);
-    vec4 l23 = fadeLineSegment(aspect, v2, v3, thickness, intensity, fade_out, clockwise);
-    vec4 l31 = fadeLineSegment(aspect, v3, v1, thickness, intensity, fade_out, clockwise);
+    vec4 l12 = fadeLineSegment(aspect, v1, v2, thickness, intensity, fade_out, true);
+    vec4 l23 = fadeLineSegment(aspect, v2, v3, thickness, intensity, fade_out, true);
+    vec4 l31 = fadeLineSegment(aspect, v3, v1, thickness, intensity, fade_out, true);
 
     vec4 color;
     color.rgb = min(l12.rgb+l23.rgb+l31.rgb, 1.0);
