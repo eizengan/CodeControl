@@ -1,32 +1,29 @@
 /*{
     "ISFVSN": "2.0",
     "CREDIT": "VJ Codec",
-    "DESCRIPTION": "Faded triangle generator for CodeControl",
+    "DESCRIPTION": "Faded rectangle generator for CodeControl",
     "CATEGORIES": [
         "generator",
         "CodeControl"
     ],
     "INPUTS": [
         {
-            "NAME": "base_x",
+            "NAME": "x",
             "TYPE": "float"
         },
         {
-            "NAME": "base_y",
+            "NAME": "y",
             "TYPE": "float"
         },
         {
-            "NAME": "base_width",
+            "NAME": "width",
             "TYPE": "float",
             "MIN": 0.0
         },
         {
-            "NAME": "vertex_x",
-            "TYPE": "float"
-        },
-        {
-            "NAME": "vertex_y",
-            "TYPE": "float"
+            "NAME": "height",
+            "TYPE": "float",
+            "MIN": 0.0
         },
         {
             "NAME": "thickness",
@@ -89,29 +86,38 @@ vec4 fadeLine(vec4 aspect, vec2 p1, vec2 p2, float thickness, float intensity, b
 vec4 fadeLineSegment(vec4 aspect, vec2 p1, vec2 p2, float thickness, float intensity, bool fadeOut, bool clockwise) {
     vec4 ep1 = fadeEndpoint(aspect, p1, p2, thickness, fadeOut, intensity);
     vec4 ep2 = fadeEndpoint(aspect, p2, p1, thickness, fadeOut, intensity);
-    vec4 l = fadeLine(aspect, p1, p2, thickness, intensity, fadeOut, clockwise);
 
     vec4 color;
-    color.rgb = ep1.rgb*ep2.rgb*l.rgb;
-    color.a = min(ep1.a, min(ep2.a, l.a));
+    color.rgb = ep1.rgb*ep2.rgb;
+    color.a = min(ep1.a, ep2.a);
+    if (p1 != p2) {
+        vec4 l = fadeLine(aspect, p1, p2, thickness, intensity, fadeOut, clockwise);
+        color.rgb *= l.rgb;
+        color.a = min(color.a, l.a);
+    }
     return color;
 }
 
 void main() {
     vec4 aspect = getAspect();
 
-    vec2 v1 = vec2(base_x - 0.5*base_width, base_y);
-    vec2 v2 = vec2(base_x + 0.5*base_width, base_y);
-    vec2 v3 = vec2(vertex_x, vertex_y);
+    vec4 offsets;
+    offsets.xy = 0.5 * vec2(-width, width);    //x offsets
+    offsets.zw = 0.5 * vec2(-height, height);  //y offsets
 
-    bool clockwise = vertex_y > base_y;
-    vec4 l12 = fadeLineSegment(aspect, v1, v2, thickness, intensity, fade_out, clockwise);
-    vec4 l23 = fadeLineSegment(aspect, v2, v3, thickness, intensity, fade_out, clockwise);
-    vec4 l31 = fadeLineSegment(aspect, v3, v1, thickness, intensity, fade_out, clockwise);
+    vec2 v1 = vec2(x + offsets.x, y + offsets.z);
+    vec2 v2 = vec2(x + offsets.x, y + offsets.w);
+    vec2 v3 = vec2(x + offsets.y, y + offsets.w);
+    vec2 v4 = vec2(x + offsets.y, y + offsets.z);
+
+    vec4 l12 = fadeLineSegment(aspect, v1, v2, thickness, intensity, fade_out, false);
+    vec4 l23 = fadeLineSegment(aspect, v2, v3, thickness, intensity, fade_out, false);
+    vec4 l34 = fadeLineSegment(aspect, v3, v4, thickness, intensity, fade_out, false);
+    vec4 l41 = fadeLineSegment(aspect, v4, v1, thickness, intensity, fade_out, false);
 
     vec4 color;
-    color.rgb = min(l12.rgb+l23.rgb+l31.rgb, 1.0);
-    color.a = max(l12.a, max(l23.a, l31.a));
+    color.rgb = min(l12.rgb+l23.rgb+l34.rgb+l41.rgb, 1.0);
+    color.a = max(l12.a, max(l23.a, max(l34.a, l41.a)));
 
     gl_FragColor = color;
 }
