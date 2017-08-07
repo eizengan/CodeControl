@@ -34,11 +34,6 @@
             "MIN": 0.0
         },
         {
-            "NAME": "fade_out",
-            "TYPE": "bool",
-            "DEFAULT": true
-        },
-        {
             "NAME": "clockwise",
             "TYPE": "bool"
         }
@@ -59,20 +54,16 @@ float slice(vec4 aspect, vec2 p1, vec2 p2, bool clockwise) {
     float inverter = 2.0*float(clockwise) - 1.0;
     return float(p1 != p2)*step(0.0, inverter*dot(points, pix));
 }
-vec4 fadeLine(vec4 aspect, vec2 p1, vec2 p2, float thickness, float intensity, bool fadeOut, bool clockwise) {
+vec4 fadeLine(vec4 aspect, vec2 p1, vec2 p2, float thickness, float intensity, bool clockwise) {
     if (thickness == 0.0 || intensity == 0.0)
         return vec4(0.0);
-    else {
-        vec2 v1 = p2 - p1;
-        vec2 v2 = aspect.xy - p1;
-        float orthoLength = length(v2 - dot(v1, v2)/dot(v1, v1)*v1);
-        float fadeDist = orthoLength/thickness;
-        fadeDist = float(fade_out)*fadeDist + (1.0 - float(fade_out))*(1.0 - fadeDist);
-        vec4 color = vec4(float(orthoLength < thickness));
-        color.rgb *= slice(aspect, p1, p2, clockwise);
-        color.a = color.r * max(0.0, 1.0 - pow(fadeDist, intensity));
-        return color;
-    }
+    vec2 v1 = p2 - p1;
+    vec2 v2 = aspect.xy - p1;
+    float orthoLength = length(v2 - dot(v1, v2)/dot(v1, v1)*v1);
+    vec4 color = vec4(float(orthoLength < thickness));
+    color.rgb *= slice(aspect, p1, p2, clockwise);
+    color.a = color.r * max(0.0, 1.0 - pow(orthoLength/thickness, intensity));
+    return color;
 }
 
 void main() {
@@ -81,7 +72,7 @@ void main() {
     vec2 v1 = vec2(x1, y1);
     vec2 v2 = vec2(x2, y2);
 
-    vec4 color = fadeLine(aspect, v1, v2, thickness, intensity, fade_out, clockwise);
+    vec4 color = fadeLine(aspect, v1, v2, thickness, intensity, clockwise);
 
     gl_FragColor = color;
 }

@@ -1,9 +1,9 @@
 /*{
     "ISFVSN": "2.0",
-    "CREDIT": "VJ Conduit",
+    "CREDIT": "VJ Codec",
     "DESCRIPTION": "Filled hexagon generator for CodeControl",
     "CATEGORIES": [
-        "filter",
+        "generator",
         "CodeControl"
     ],
     "INPUTS": [

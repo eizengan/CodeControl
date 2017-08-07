@@ -40,11 +40,6 @@
             "NAME": "intensity",
             "TYPE": "float",
             "MIN": 0.0
-        },
-        {
-            "NAME": "fade_out",
-            "TYPE": "bool",
-            "DEFAULT": true
         }
     ]
 }*/

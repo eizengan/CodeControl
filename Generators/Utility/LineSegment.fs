@@ -1,5 +1,4 @@
-/*
-  {
+/*{
     "ISFVSN": "2.0",
     "CREDIT": "VJ Codec",
     "DESCRIPTION": "Thick line segment generator for CodeControl",

@@ -1,5 +1,4 @@
-/*
-  {
+/*{
     "ISFVSN": "2.0",
     "CREDIT": "VJ Codec",
     "DESCRIPTION": "Thick line generator for CodeControl",
@@ -65,7 +64,7 @@ void main() {
     vec2 v1 = vec2(x1, y1);
     vec2 v2 = vec2(x2, y2);
 
-    vec4 color = vec4(thickLine(aspect, v1, v2, thickness))
+    vec4 color = vec4(thickLine(aspect, v1, v2, thickness));
 
     gl_FragColor = color;
 }

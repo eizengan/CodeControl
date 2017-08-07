@@ -1,4 +1,5 @@
 /*{
+    "ISFVSN": "2.0",
     "CREDIT": "VJ Codec",
     "DESCRIPTION": "Filled rectangle generator for CodeContol",
     "CATEGORIES": [
