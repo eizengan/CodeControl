@@ -79,8 +79,9 @@ void main() {
     float s45 = float(v4==v5)*1.0 + float(v4!=v5)*slice(aspect, v4, v5, false);
     float s56 = float(v5==v6)*1.0 + float(v5!=v6)*slice(aspect, v5, v6, false);
     float s61 = float(v1==v6)*1.0 + float(v1!=v6)*slice(aspect, v6, v1, false);
+    vec4 degenerate = float(height+width==0.0)*vec4(0.0) + float(height+width!=0.0)*vec4(1.0);
 
-    vec4 color = vec4(s12*s23*s34*s45*s56*s61);
+    vec4 color = vec4(s12*s23*s34*s45*s56*s61*degenerate);
 
     gl_FragColor = color;
 }
