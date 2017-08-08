@@ -7,11 +7,11 @@
     ],
     "INPUTS": [
         {
-            "NAME": "x",
+            "NAME": "base_x",
             "TYPE": "float"
         },
         {
-            "NAME": "y",
+            "NAME": "base_y",
             "TYPE": "float"
         },
         {
@@ -76,10 +76,10 @@ void main() {
     offsets.xy = 0.5 * vec2(-width, width);                  //x offsets
     offsets.zw = 0.5 * vec2(thickness, height + thickness);  //y offsets
 
-    vec2 v1 = vec2(x + offsets.x, y + offsets.z);
-    vec2 v2 = vec2(x + offsets.x, y + offsets.w);
-    vec2 v3 = vec2(x + offsets.y, y + offsets.w);
-    vec2 v4 = vec2(x + offsets.y, y + offsets.z);
+    vec2 v1 = vec2(base_x + offsets.x, base_y + offsets.z);
+    vec2 v2 = vec2(base_x + offsets.x, base_y + offsets.w);
+    vec2 v3 = vec2(base_x + offsets.y, base_y + offsets.w);
+    vec2 v4 = vec2(base_x + offsets.y, base_y + offsets.z);
 
     float l12 = thickLineSeg(aspect, v1, v2, thickness);
     float l23 = thickLineSeg(aspect, v2, v3, thickness);
