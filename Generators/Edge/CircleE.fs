@@ -8,11 +8,11 @@
     ],
     "INPUTS": [
         {
-            "NAME": "x",
+            "NAME": "base_x",
             "TYPE": "float"
         },
         {
-            "NAME": "y",
+            "NAME": "base_y",
             "TYPE": "float"
         },
         {
@@ -39,7 +39,7 @@ vec4 getAspect() {
 void main() {
     vec4 aspect = getAspect();
 
-    vec2 center = vec2(x, y + radius + 0.5*thickness);
+    vec2 center = vec2(base_x, base_y + radius + 0.5*thickness);
     vec2 edges = radius + thickness * vec2(-0.5, 0.5);
     float pixelDistance = distance(aspect.xy, center);
 

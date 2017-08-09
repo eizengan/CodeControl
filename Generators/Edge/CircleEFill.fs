@@ -8,11 +8,11 @@
     ],
     "INPUTS": [
         {
-            "NAME": "x",
+            "NAME": "base_x",
             "TYPE": "float"
         },
         {
-            "NAME": "y",
+            "NAME": "base_y",
             "TYPE": "float"
         },
         {
@@ -35,7 +35,7 @@ vec4 getAspect() {
 void main() {
     vec4 aspect = getAspect();
 
-    vec2 center = vec2(x, y + radius);
+    vec2 center = vec2(base_x, base_y + radius);
     float pixelDistance = distance(aspect.xy, center);
 
     vec4 color = vec4(float(pixelDistance <= radius));
