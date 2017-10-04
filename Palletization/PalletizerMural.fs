@@ -59,7 +59,7 @@ void main() {
 	    band_size_div = bw_bands / bw_size;   
    
     pixel.rgb = float(index<=1.0)  * hsv2rgb(vec3(index, 1.0, hsv.z)) +
-                float(index> 1.0) * float(fract((index - 1.0)*band_size_div) < bw_balance);
+                float(index> 1.0) * hsv.z*float(fract((index - 1.0)*band_size_div) < bw_balance);
 	pixel.a = 1.0;
   
     gl_FragColor = pixel;
