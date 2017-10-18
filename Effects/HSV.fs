@@ -52,17 +52,20 @@ vec3 hsv2rgb(vec3 c) {
     vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
     return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
 }
+float compress(float x, float factor) {
+    if (factor >= 0.0)
+        factor = 1.0 + factor;
+    else
+        factor = 1.0/(1.0 - factor);
+    return pow(x, factor);
+}
 
 void main() {
     vec4 pixel = IMG_THIS_PIXEL(inputImage);
     vec3 hsv = rgb2hsv(pixel.rgb);
     
-    float sc_scaled = float(sat_compression >= 0.0)*(1.0 + sat_compression) +
-                      float(sat_compression <  0.0)*(1.0/(1.0 - sat_compression));
-    float sat = pow(hsv.y, sc_scaled);
-    float vc_scaled = float(val_compression >= 0.0)*(1.0 + val_compression) +
-                      float(val_compression <  0.0)*(1.0/(1.0 - val_compression));
-    float val = pow(hsv.z, vc_scaled);
+    float sat = compress(hsv.y, sat_compression);
+    float val = compress(hsv.z, val_compression);
    
    
     float hue = fract(hsv.x + hue_offset);
