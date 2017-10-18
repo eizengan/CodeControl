@@ -18,9 +18,7 @@
         },
         {
             "NAME": "bw_bands",
-            "TYPE": "float",
-            "MIN": 1.0,
-			"DEFAULT": 1.0
+            "TYPE": "float"
         },
         {
             "NAME": "bw_balance",
