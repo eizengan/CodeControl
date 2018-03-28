@@ -32,22 +32,21 @@
 
 void main() {
     vec4 pixel = IMG_THIS_PIXEL(inputImage);
-    pixel.rgb = pixel.rgb*pixel.a;
     
-    float index = 0.2989*pixel.r + 0.5866*pixel.g + 0.1145*pixel.b;
-    index = multiplier * index + offset;
-    float mirror_index = mod(2.0*index, 2.0);
-    mirror_index = float(mirror_index <= 1.0)*mirror_index +
-                   float(mirror_index >  1.0)*(2.0 - mirror_index);
-    index = float( mirror)*mirror_index +
-            float(!mirror)*fract(index);
+    float a = pixel.a;
+    a = multiplier * a + offset;
+    float mirror_a = mod(2.0*a, 2.0);
+    mirror_a = float(mirror_a <= 1.0)*mirror_a +
+               float(mirror_a >  1.0)*(2.0 - mirror_a);
+    a = float( mirror)*mirror_a +
+        float(!mirror)*fract(a);
     
     float comp_scaled;
     if (compression >= 0.0)
-	    comp_scaled = 1.0 + compression;
-	else
-	    comp_scaled = 1.0/(1.0 - compression);
-		
-    pixel.a = pow(index, comp_scaled);    
+        comp_scaled = 1.0 + compression;
+    else
+        comp_scaled = 1.0/(1.0 - compression);
+
+    pixel.a *= pow(a, comp_scaled);
     gl_FragColor = pixel;
 }

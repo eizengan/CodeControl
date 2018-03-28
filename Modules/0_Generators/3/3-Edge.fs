@@ -29,7 +29,7 @@
             "NAME": "vertex_x",
             "TYPE": "float",
             "MIN": 0.0,
-            "MAX": 0.0
+            "MAX": 1.0
         },
         {
             "NAME": "thickness",
