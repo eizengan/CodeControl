@@ -62,8 +62,8 @@ float slice(vec4 aspect, vec2 p1, vec2 p2, bool clockwise) {
 vec4 fadeEndpoint(vec4 aspect, vec2 p1, vec2 p2, float thickness, float intensity) {
     float len = distance(aspect.xy, p1);
     bool side = dot(p2 - p1, aspect.xy - p1) > 0.0;
-    vec4 color = vec4(float(len <= thickness || side));
-    color.a = max(float(side), 1.0 - pow(len/thickness, intensity));
+    vec4 color = vec4(max(float(side), 1.0 - pow(len/thickness, intensity)));
+    color.a = float(len <= thickness || side);
     return color;
 }
 vec4 fadeLine(vec4 aspect, vec2 p1, vec2 p2, float thickness, float intensity, bool clockwise) {
@@ -72,22 +72,19 @@ vec4 fadeLine(vec4 aspect, vec2 p1, vec2 p2, float thickness, float intensity, b
     vec2 v1 = p2 - p1;
     vec2 v2 = aspect.xy - p1;
     float orthoLength = length(v2 - dot(v1, v2)/dot(v1, v1)*v1);
-    vec4 color = vec4(float(orthoLength < thickness));
-    color.rgb *= slice(aspect, p1, p2, clockwise);
-    color.a = color.r * max(0.0, 1.0 - pow(orthoLength/thickness, intensity));
+    vec4 color = vec4(max(0.0, 1.0 - pow(orthoLength/thickness, intensity)));
+    color.a = float(orthoLength < thickness);
+    color *= slice(aspect, p1, p2, clockwise);
     return color;
 }
 vec4 fadeLineSegment(vec4 aspect, vec2 p1, vec2 p2, float thickness, float intensity, bool clockwise) {
     vec4 ep1 = fadeEndpoint(aspect, p1, p2, thickness, intensity);
     vec4 ep2 = fadeEndpoint(aspect, p2, p1, thickness, intensity);
 
-    vec4 color;
-    color.rgb = ep1.rgb*ep2.rgb;
-    color.a = min(ep1.a, ep2.a);
+    vec4 color = ep1*ep2;
     if (p1 != p2) {
         vec4 l = fadeLine(aspect, p1, p2, thickness, intensity, clockwise);
-        color.rgb *= l.rgb;
-        color.a = min(color.a, l.a);
+        color = min(color, l);
     }
     return color;
 }
@@ -109,9 +106,8 @@ void main() {
     vec4 l34 = fadeLineSegment(aspect, v3, v4, thickness, intensity, true);
     vec4 l41 = fadeLineSegment(aspect, v4, v1, thickness, intensity, true);
 
-    vec4 color;
-    color.rgb = min(l12.rgb+l23.rgb+l34.rgb+l41.rgb, 1.0);
-    color.a = max(l12.a, max(l23.a, max(l34.a, l41.a)));
+    vec4 color =  max(l12, max(l23, max(l34, l41)));
+	color.a = min(l12.a+l23.a+l34.a+l41.a, 1.0);
 
     gl_FragColor = color;
 }

@@ -1,0 +1,33 @@
+vec4 fadeEndpoint(vec4 aspect, vec2 p1, vec2 p2, float thickness, float intensity) {
+    float len = distance(aspect.xy, p1);
+    bool side = dot(p2 - p1, aspect.xy - p1) > 0.0;
+    vec4 color = vec4(max(float(side), 1.0 - pow(len/thickness, intensity)));
+    color.a = float(len <= thickness || side);
+    return color;
+}
+vec4 fadeLine(vec4 aspect, vec2 p1, vec2 p2, float thickness, float intensity, bool clockwise) {
+    if (thickness == 0.0 || intensity == 0.0)
+        return vec4(0.0);
+    vec2 v1 = p2 - p1;
+    vec2 v2 = aspect.xy - p1;
+    float orthoLength = length(v2 - dot(v1, v2)/dot(v1, v1)*v1);
+    vec4 color = vec4(max(0.0, 1.0 - pow(orthoLength/thickness, intensity)));
+    color.a = float(orthoLength < thickness);
+    color *= slice(aspect, p1, p2, clockwise);
+    return color;
+}
+vec4 fadeLineSegment(vec4 aspect, vec2 p1, vec2 p2, float thickness, float intensity, bool clockwise) {
+    vec4 ep1 = fadeEndpoint(aspect, p1, p2, thickness, intensity);
+    vec4 ep2 = fadeEndpoint(aspect, p2, p1, thickness, intensity);
+
+    vec4 color = ep1*ep2;
+    if (p1 != p2) {
+        vec4 l = fadeLine(aspect, p1, p2, thickness, intensity, clockwise);
+        color = min(color, l);
+    }
+    return color;
+}
+
+
+    vec4 color =  max(l12, max(l23, max(l34, max(l45, max(l56, l61)))));
+	color.a = min(l12.a+l23.a+l34.a+l45.a+l56.a+l61.a, 1.0);

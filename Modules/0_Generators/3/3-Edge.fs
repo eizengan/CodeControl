@@ -1,27 +1,35 @@
 /*{
     "ISFVSN": "2.0",
     "CREDIT": "VJ Codec",
-    "DESCRIPTION": "Thick line segment generator for CodeControl",
+    "DESCRIPTION": "Triangle generator for CodeControl",
     "CATEGORIES": [
         "generator",
         "CodeControl"
     ],
     "INPUTS": [
         {
-            "NAME": "x1",
+            "NAME": "base_x",
             "TYPE": "float"
         },
         {
-            "NAME": "y1",
+            "NAME": "base_y",
             "TYPE": "float"
         },
         {
-            "NAME": "x2",
-            "TYPE": "float"
+            "NAME": "width",
+            "TYPE": "float",
+            "MIN": 0.0
         },
         {
-            "NAME": "y2",
-            "TYPE": "float"
+            "NAME": "height",
+            "TYPE": "float",
+            "MIN": 0.0
+        },
+        {
+            "NAME": "vertex_x",
+            "TYPE": "float",
+            "MIN": 0.0,
+            "MAX": 1.0
         },
         {
             "NAME": "thickness",
@@ -71,10 +79,15 @@ float thickLineSeg(vec4 aspect, vec2 p1, vec2 p2, float thickness) {
 void main() {
     vec4 aspect = getAspect();
 
-    vec2 v1 = vec2(x1, y1);
-    vec2 v2 = vec2(x2, y2);
+    vec2 v1 = vec2(base_x - 0.5*width, base_y);
+    vec2 v2 = vec2(base_x + 0.5*width, base_y);
+    vec2 v3 = vec2(base_x + (vertex_x - 0.5)*width, base_y + height);
 
-    vec4 color = vec4(thickLineSeg(aspect, v1, v2, thickness));
+    float l12 = thickLineSeg(aspect, v1, v2, thickness);
+    float l23 = thickLineSeg(aspect, v2, v3, thickness);
+    float l31 = thickLineSeg(aspect, v3, v1, thickness);
+
+    vec4 color = vec4(min(1.0, l12+l23+l31));
 
     gl_FragColor = color;
 }
