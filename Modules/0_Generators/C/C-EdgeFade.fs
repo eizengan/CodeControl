@@ -44,7 +44,7 @@ vec4 getAspect() {
 void main() {
     vec4 aspect = getAspect();
 
-    vec2 center = vec2(base_x, base_y + radius + thickness);
+    vec2 center = vec2(base_x, base_y + radius);
     vec2 edges = radius + thickness * vec2(0.0, 1.0);
     float pixelDistance = distance(aspect.xy, center);
 

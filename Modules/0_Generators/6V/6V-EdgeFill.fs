@@ -68,7 +68,7 @@ void main() {
 
     vec2 v1 = vec2(base_x,             base_y);
     vec2 v2 = vec2(base_x + offsets.y, base_y + offsets.z);
-    vec2 v3 = vec2(base_x + offsets.y, base_y +  offsets.w);
+    vec2 v3 = vec2(base_x + offsets.y, base_y + offsets.w);
     vec2 v4 = vec2(base_x,             base_y + height);
     vec2 v5 = vec2(base_x + offsets.x, base_y + offsets.w);
     vec2 v6 = vec2(base_x + offsets.x, base_y + offsets.z);

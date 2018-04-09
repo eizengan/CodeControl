@@ -1,0 +1,16 @@
+META:
+static slice rotation (cw, ccw)
+clean up unnecessary calls (e.g. vec(0.0))
+general cleanup
+consider fringe cases ((1,1,1,0) and (0,0,0,1))
+compositing modes for generators/compositors/transforms
+consider bpm (global speed, divisor, count?)
+(x, y, a) using index vals for 3d?
+check out G3D shaders
+
+MODULES:
+chromatic fade
+granularize
+fuzz/distort
+spread
+milkdrop stuff?
