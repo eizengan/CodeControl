@@ -116,14 +116,13 @@ void main() {
     vec2 v5 = vec2(base_x - offsets.x, base_y + offsets.w);
     vec2 v6 = vec2(base_x - offsets.y, base_y);
 
-    vec4 l12 = float(v1==v2)*vec4(0.0) + float(v1!=v2)*fadeLineSegment(aspect, v1, v2, thickness, intensity, true);
-    vec4 l23 = float(v2==v3)*vec4(0.0) + float(v2!=v3)*fadeLineSegment(aspect, v2, v3, thickness, intensity, true);
-    vec4 l34 = float(v3==v4)*vec4(0.0) + float(v3!=v4)*fadeLineSegment(aspect, v3, v4, thickness, intensity, true);
-    vec4 l45 = float(v4==v5)*vec4(0.0) + float(v4!=v5)*fadeLineSegment(aspect, v4, v5, thickness, intensity, true);
-    vec4 l56 = float(v5==v6)*vec4(0.0) + float(v5!=v6)*fadeLineSegment(aspect, v5, v6, thickness, intensity, true);
-    vec4 l61 = float(v6==v1)*vec4(0.0) + float(v6!=v1)*fadeLineSegment(aspect, v6, v1, thickness, intensity, true);
-    vec4 degenerate = float(height+width!=0.0)*vec4(0.0) +
-                      float(height+width==0.0)*fadeEndpoint(aspect, v1, v1, thickness, intensity);
+    vec4 l12 = float(v1!=v2)*fadeLineSegment(aspect, v1, v2, thickness, intensity, true);
+    vec4 l23 = float(v2!=v3)*fadeLineSegment(aspect, v2, v3, thickness, intensity, true);
+    vec4 l34 = float(v3!=v4)*fadeLineSegment(aspect, v3, v4, thickness, intensity, true);
+    vec4 l45 = float(v4!=v5)*fadeLineSegment(aspect, v4, v5, thickness, intensity, true);
+    vec4 l56 = float(v5!=v6)*fadeLineSegment(aspect, v5, v6, thickness, intensity, true);
+    vec4 l61 = float(v6!=v1)*fadeLineSegment(aspect, v6, v1, thickness, intensity, true);
+    vec4 degenerate = float(height+width==0.0)*fadeEndpoint(aspect, v1, v1, thickness, intensity);
 
     vec4 color;
     color.rgb = min(l12.rgb+l23.rgb+l34.rgb+l45.rgb+l56.rgb+l61.rgb+degenerate.rgb, 1.0);

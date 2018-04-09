@@ -71,11 +71,11 @@ void main() {
     vec2 v4 = vec2(x,             base_y + offsets.z);
     vec2 v5 = vec2(x - offsets.x, base_y + offsets.w);
 
-    float s12 = float(v1==v2)*1.0 + float(v1!=v2)*slice(aspect, v1, v2, false);
-    float s23 = float(v2==v3)*1.0 + float(v2!=v3)*slice(aspect, v2, v3, false);
+    float s12 = float(v1==v2) + float(v1!=v2)*slice(aspect, v1, v2, false);
+    float s23 = float(v2==v3) + float(v2!=v3)*slice(aspect, v2, v3, false);
     float s34 = slice(aspect, v3, v4, false);
     float s45 = slice(aspect, v4, v5, false);
-    float s51 = float(v5==v1)*1.0 + float(v5!=v1)*slice(aspect, v5, v1, false);
+    float s51 = float(v5==v1) + float(v5!=v1)*slice(aspect, v5, v1, false);
 
     vec4 color = vec4(s12*s23*s34*s45*s51);
 

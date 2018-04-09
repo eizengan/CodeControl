@@ -114,11 +114,11 @@ void main() {
     vec2 v4 = vec2(x,             base_y + offsets.z);
     vec2 v5 = vec2(x - offsets.x, base_y + offsets.w);
 
-    vec4 l12 = float(v1==v2)*vec4(0.0) + float(v1!=v2)*fadeLineSegment(aspect, v1, v2, thickness, intensity, true);
-    vec4 l23 = float(v2==v3)*vec4(0.0) + float(v2!=v3)*fadeLineSegment(aspect, v2, v3, thickness, intensity, true);
+    vec4 l12 = float(v1!=v2)*fadeLineSegment(aspect, v1, v2, thickness, intensity, true);
+    vec4 l23 = float(v2!=v3)*fadeLineSegment(aspect, v2, v3, thickness, intensity, true);
     vec4 l34 = fadeLineSegment(aspect, v3, v4, thickness, intensity, true);
     vec4 l45 = fadeLineSegment(aspect, v4, v5, thickness, intensity, true);
-    vec4 l51 = float(v5==v1)*vec4(0.0) + float(v5!=v1)*fadeLineSegment(aspect, v5, v1, thickness, intensity, true);
+    vec4 l51 = float(v5!=v1)*fadeLineSegment(aspect, v5, v1, thickness, intensity, true);
 
     vec4 color;
     color.rgb = min(l12.rgb+l23.rgb+l34.rgb+l45.rgb+l51.rgb, 1.0);

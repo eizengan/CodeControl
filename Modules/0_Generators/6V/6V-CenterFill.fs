@@ -75,10 +75,10 @@ void main() {
     vec2 v6 = vec2(x + offsets.x, base_y + offsets.z);
 
     float s12 = slice(aspect, v1, v2, false);
-    float s23 = float(v2==v3)*1.0 + float(v2!=v3)*slice(aspect, v2, v3, false);
+    float s23 = float(v2==v3) + float(v2!=v3)*slice(aspect, v2, v3, false);
     float s34 = slice(aspect, v3, v4, false);
     float s45 = slice(aspect, v4, v5, false);
-    float s56 = float(v5==v6)*1.0 + float(v5!=v6)*slice(aspect, v5, v6, false);
+    float s56 = float(v5==v6) + float(v5!=v6)*slice(aspect, v5, v6, false);
     float s61 = slice(aspect, v6, v1, false);
 
     vec4 color = vec4(s12*s23*s34*s45*s56*s61);
